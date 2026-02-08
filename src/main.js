@@ -248,16 +248,23 @@ function handleNo() {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Garden ready 🌸');
   
-  // Start button - supports both click and touch
+  // DEBUG: Check if button exists
   const startBtn = document.getElementById('startBtn');
+  console.log('Start button found:', startBtn);
+  
   if (startBtn) {
-    startBtn.addEventListener('click', startGarden);
+    startBtn.addEventListener('click', () => {
+      console.log('Button clicked!');
+      startGarden();
+    });
+    
+    // Also add touch for mobile
     startBtn.addEventListener('touchend', (e) => {
       e.preventDefault();
+      console.log('Button touched!');
       startGarden();
     });
   }
-  
   // Next button
   const nextBtn = document.getElementById('nextBtn');
   if (nextBtn) {
