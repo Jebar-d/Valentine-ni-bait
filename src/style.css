@@ -9,7 +9,6 @@
   --bg-gradient-start: #1a1a2e;
   --bg-gradient-end: #0f0f1a;
   
-  /* Lavender Purple Theme */
   --lavender-light: #e6e6fa;
   --lavender-soft: #d8bfd8;
   --lavender-main: #b19cd9;
@@ -34,6 +33,8 @@
 
 html {
   font-size: 16px;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -42,16 +43,8 @@ body {
   overflow: hidden;
   height: 100vh;
   color: var(--text-primary);
-}
-
-.btn {
-  position: relative;
-  z-index: 1000;
-  cursor: pointer;
-  -webkit-tap-highlight-color: rgba(177, 156, 217, 0.3);
   touch-action: manipulation;
-  user-select: none;
-  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .scene {
@@ -59,14 +52,14 @@ body {
   height: 100vh;
   position: relative;
   background: radial-gradient(ellipse at bottom, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  pointer-events: none;
 }
+
 .scene.blurred {
   filter: blur(10px) brightness(0.3);
   transition: filter 1.5s ease;
 }
 
-/* Stars */
+/* Stars - no pointer events */
 .stars {
   position: fixed;
   top: 0;
@@ -100,7 +93,7 @@ body {
   50% { opacity: 0.3; }
 }
 
-/* Moon */
+/* Moon - no pointer events */
 .moon {
   position: absolute;
   top: 8%;
@@ -111,20 +104,20 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 40px rgba(177, 156, 217, 0.3);
   opacity: 0.9;
+  pointer-events: none;
 }
 
-/* Intro Screen */
+/* Intro Screen - MUST HAVE POINTER EVENTS */
 .intro-screen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 100;
+  z-index: 1000;
   width: 90%;
   max-width: 500px;
   pointer-events: auto;
-  z-index: 1000;
 }
 
 .main-title {
@@ -146,23 +139,36 @@ body {
   margin-bottom: 2rem;
 }
 
-.btn-start {
-  background: linear-gradient(135deg, var(--lavender-main), var(--lavender-deep));
-  color: white;
-  border: none;
-  padding: 1rem 3rem;
-  font-size: 1rem;
-  border-radius: 50px;
+/* BUTTON STYLES - MOBILE OPTIMIZED */
+.btn {
+  position: relative;
+  z-index: 1001;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(177, 156, 217, 0.3);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  border: none;
+  outline: none;
   font-family: var(--font-body);
   letter-spacing: 2px;
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: transform 0.1s ease, box-shadow 0.3s ease;
+}
+
+.btn-start {
+  background: linear-gradient(135deg, var(--lavender-main), var(--lavender-deep));
+  color: white;
+  padding: 1.2rem 3rem;
+  font-size: 1rem;
+  border-radius: 50px;
   box-shadow: 0 4px 20px rgba(177, 156, 217, 0.4);
-  position: relative;
-  z-index: 101;
   min-height: 50px;
   min-width: 200px;
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 @media (hover: hover) {
@@ -170,11 +176,6 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 6px 30px rgba(177, 156, 217, 0.6);
   }
-}
-
-.btn-start:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 10px rgba(177, 156, 217, 0.4);
 }
 
 /* Growth Screen */
@@ -185,6 +186,7 @@ body {
   transform: translateX(-50%);
   text-align: center;
   z-index: 40;
+  pointer-events: none;
 }
 
 .growth-text {
@@ -209,10 +211,10 @@ body {
   transform: translateX(-50%);
   width: 100%;
   height: 60vh;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
-/* Flower Wrappers - Start hidden */
+/* Flower Wrappers */
 .flower-wrapper,
 .tulip-wrapper {
   position: absolute;
@@ -220,7 +222,7 @@ body {
   transform-origin: bottom center;
   transform: scaleY(0);
   opacity: 0;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .flower-wrapper--1 { left: 50%; }
@@ -229,7 +231,6 @@ body {
 .tulip-wrapper--1 { left: 37%; }
 .tulip-wrapper--2 { left: 63%; }
 
-/* Growing State */
 .flower-wrapper.growing,
 .tulip-wrapper.growing {
   animation: grow-up 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -594,7 +595,7 @@ body {
   z-index: 100;
   opacity: 0;
   transition: opacity 1s ease;
-  pointer-events: auto;
+  pointer-events: none;
   background: rgba(15, 15, 26, 0.8);
 }
 
@@ -610,8 +611,8 @@ body {
   overflow-y: auto;
   position: relative;
   transform: scale(0.9);
-  pointer-events: auto;
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: auto;
 }
 
 .letter-overlay.show .letter-container {
@@ -629,6 +630,7 @@ body {
     0 0 30px rgba(177, 156, 217, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  pointer-events: auto;
 }
 
 .letter-decoration {
@@ -686,15 +688,9 @@ body {
 .btn-next {
   background: linear-gradient(135deg, var(--lavender-main), var(--lavender-deep));
   color: white;
-  border: none;
   padding: 0.9rem 2.5rem;
   font-size: 1rem;
   border-radius: 50px;
-  cursor: pointer;
-  font-family: var(--font-body);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(177, 156, 217, 0.3);
 }
 
@@ -703,11 +699,6 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(177, 156, 217, 0.5);
   }
-}
-
-.btn-next:active {
-  transform: translateY(0px);
-  box-shadow: 0 2px 10px rgba(177, 156, 217, 0.3);
 }
 
 .letter-question {
@@ -737,14 +728,9 @@ body {
 .btn-yes {
   background: linear-gradient(135deg, var(--lavender-main), var(--lavender-deep));
   color: white;
-  border: none;
   padding: 1rem 2.5rem;
   font-size: 1rem;
   border-radius: 50px;
-  cursor: pointer;
-  font-family: var(--font-body);
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(177, 156, 217, 0.4);
 }
 
@@ -755,11 +741,6 @@ body {
   }
 }
 
-.btn-yes:active {
-  transform: translateY(0px);
-  box-shadow: 0 2px 10px rgba(177, 156, 217, 0.4);
-}
-
 .btn-no {
   background: transparent;
   color: var(--text-secondary);
@@ -767,10 +748,6 @@ body {
   padding: 1rem 2rem;
   font-size: 0.9rem;
   border-radius: 50px;
-  cursor: pointer;
-  font-family: var(--font-body);
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
 }
 
 @media (hover: hover) {
@@ -779,11 +756,6 @@ body {
     color: var(--lavender-soft);
     transform: scale(0.95);
   }
-}
-
-.btn-no:active {
-  transform: scale(0.98);
-  border-color: var(--lavender-main);
 }
 
 .btn-no.shrunk {
