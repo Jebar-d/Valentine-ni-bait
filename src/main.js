@@ -234,10 +234,10 @@ function handleNo() {
   noClickCount++;
   if (noClickCount === 1) {
     btn.classList.add('shrunk');
-    btn.textContent = 'Are you sure?';
+    btn.textContent = 'Sure ka ba dyan?';
   } else if (noClickCount === 2) {
     btn.classList.add('tiny');
-    btn.textContent = 'Really?';
+    btn.textContent = 'talaga?';
   } else if (noClickCount >= 3) {
     btn.style.opacity = '0';
     btn.style.pointerEvents = 'none';
