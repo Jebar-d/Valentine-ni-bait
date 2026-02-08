@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hueyyy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Lato:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <div class="scene" id="scene">
+    <!-- Stars Background -->
+    <div class="stars"></div>
+    
+    <!-- Moon -->
+    <div class="moon"></div>
+    
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="introScreen">
+      <button class="btn btn-start" onclick="startGarden()">Enter Garden ni bait</button>
+    </div>
+
+    <!-- Growth Screen -->
+    <div class="growth-screen hidden" id="growthScreen">
+    </div>
+
+    <!-- Garden -->
+    <div class="garden hidden" id="garden">
+      <!-- Flower 1 -->
+      <div class="flower-wrapper flower-wrapper--1" id="wrapper1">
+        <div class="flower flower--1" id="flower1">
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+          </div>
+          <div class="flower__head" id="head1">
+            <div class="flower__bud"></div>
+            <div class="flower__petal flower__petal--1"></div>
+            <div class="flower__petal flower__petal--2"></div>
+            <div class="flower__petal flower__petal--3"></div>
+            <div class="flower__petal flower__petal--4"></div>
+            <div class="flower__center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flower 2 -->
+      <div class="flower-wrapper flower-wrapper--2" id="wrapper2">
+        <div class="flower flower--2" id="flower2">
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+          </div>
+          <div class="flower__head" id="head2">
+            <div class="flower__bud"></div>
+            <div class="flower__petal flower__petal--1"></div>
+            <div class="flower__petal flower__petal--2"></div>
+            <div class="flower__petal flower__petal--3"></div>
+            <div class="flower__petal flower__petal--4"></div>
+            <div class="flower__center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flower 3 -->
+      <div class="flower-wrapper flower-wrapper--3" id="wrapper3">
+        <div class="flower flower--3" id="flower3">
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+          </div>
+          <div class="flower__head" id="head3">
+            <div class="flower__bud"></div>
+            <div class="flower__petal flower__petal--1"></div>
+            <div class="flower__petal flower__petal--2"></div>
+            <div class="flower__petal flower__petal--3"></div>
+            <div class="flower__petal flower__petal--4"></div>
+            <div class="flower__center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tulip 1 -->
+      <div class="tulip-wrapper tulip-wrapper--1" id="tulipWrapper1">
+        <div class="tulip" id="tulip1">
+          <div class="tulip__stem">
+            <div class="tulip__leaf tulip__leaf--left"></div>
+            <div class="tulip__leaf tulip__leaf--right"></div>
+          </div>
+          <div class="tulip__flower" id="tulipFlower1">
+            <div class="tulip__bud"></div>
+            <div class="tulip__petal tulip__petal--left"></div>
+            <div class="tulip__petal tulip__petal--right"></div>
+            <div class="tulip__petal tulip__petal--center"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tulip 2 -->
+      <div class="tulip-wrapper tulip-wrapper--2" id="tulipWrapper2">
+        <div class="tulip" id="tulip2">
+          <div class="tulip__stem">
+            <div class="tulip__leaf tulip__leaf--left"></div>
+            <div class="tulip__leaf tulip__leaf--right"></div>
+          </div>
+          <div class="tulip__flower" id="tulipFlower2">
+            <div class="tulip__bud"></div>
+            <div class="tulip__petal tulip__petal--left"></div>
+            <div class="tulip__petal tulip__petal--right"></div>
+            <div class="tulip__petal tulip__petal--center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grass -->
+    <div class="grass hidden" id="grass">
+      <div class="grass__blade grass__blade--1"></div>
+      <div class="grass__blade grass__blade--2"></div>
+      <div class="grass__blade grass__blade--3"></div>
+      <div class="grass__blade grass__blade--4"></div>
+      <div class="grass__blade grass__blade--5"></div>
+      <div class="grass__blade grass__blade--6"></div>
+      <div class="grass__blade grass__blade--7"></div>
+      <div class="grass__blade grass__blade--8"></div>
+    </div>
+
+    <!-- Fireflies -->
+    <div class="fireflies hidden" id="fireflies">
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+    </div>
+  </div>
+
+  <!-- Letter Overlay -->
+  <div class="letter-overlay hidden" id="letterOverlay">
+    <div class="letter-container">
+      <div class="letter-border">
+        
+        <div class="letter-content">
+          <div class="letter-header">
+            <span class="letter-icon"></span>
+            <span class="letter-icon"></span>
+          </div>
+          
+          <div class="letter-body">
+            <p class="letter-text" id="letterText"></p>
+          </div>
+
+          <div class="letter-navigation" id="letterNav">
+            <button class="btn btn-next" id="nextBtn" onclick="nextSentence()">Next</button>
+          </div>
+
+          <div class="letter-question hidden" id="questionSection">
+            <p class="question-text">Pwede ka ba makasama sa valentine or sa monday boss </p>
+            <div class="letter-buttons">
+              <button class="btn btn-yes" onclick="handleYes()">Yes, I'd love to</button>
+              <button class="btn btn-no" id="noBtn" onclick="handleNo()">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Photo Screen -->
+  <div class="photo-screen hidden" id="photoScreen">
+    <div class="photo-container">
+      <h2 class="photo-title">Parang tanga💜</h2>
+      <div class="photo-frame">
+        <!-- REPLACE THIS WITH YOUR PHOTO -->
+        <img src="./public/face.jpg" alt="Parang tanga" class="your-photo" id="yourPhoto">
+        <div class="photo-placeholder" id="photoPlaceholder">
+          <span>📸 Your Photo Here</span>
+          <p>Replace /your-photo.jpg in the code</p>
+        </div>
+      </div>
+      <p class="photo-caption">wla na napangiti n ang kumag</p>
+      <p class="photo-caption">ANG CORNY K DITO GAGO PASENSYA</p>
+    </div>
+  </div>
+
+  <script src="./src/main.js"></script>
+</body>
+</html>
