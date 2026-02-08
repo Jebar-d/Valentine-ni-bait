@@ -21,6 +21,7 @@ const sentences = [
   "Pero nagreply ka e, tas ngaun tuwang tuwa si gago n gumawa neto",
   "Wala e, kahit anong gawin k, napaka laki ng ipikto m e",
   "Kainis wlang self react dito",
+  "Sorry kung nakakaabala ren pla sau to",
   "So eto bossing ang million dollar question",
   "Di ka na talo boiii."
 ];
