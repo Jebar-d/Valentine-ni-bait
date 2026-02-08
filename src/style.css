@@ -45,8 +45,13 @@ body {
 }
 
 .btn {
+  position: relative;
+  z-index: 1000;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(177, 156, 217, 0.3);
   touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .scene {
@@ -54,8 +59,8 @@ body {
   height: 100vh;
   position: relative;
   background: radial-gradient(ellipse at bottom, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+  pointer-events: none;
 }
-
 .scene.blurred {
   filter: blur(10px) brightness(0.3);
   transition: filter 1.5s ease;
@@ -115,10 +120,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 50;
+  z-index: 100;
   width: 90%;
   max-width: 500px;
-  animation: fadeIn 1s ease;
+  pointer-events: auto;
+  z-index: 1000;
 }
 
 .main-title {
@@ -153,6 +159,10 @@ body {
   text-transform: uppercase;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(177, 156, 217, 0.4);
+  position: relative;
+  z-index: 101;
+  min-height: 50px;
+  min-width: 200px;
 }
 
 @media (hover: hover) {
@@ -199,7 +209,7 @@ body {
   transform: translateX(-50%);
   width: 100%;
   height: 60vh;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 /* Flower Wrappers - Start hidden */
@@ -210,7 +220,7 @@ body {
   transform-origin: bottom center;
   transform: scaleY(0);
   opacity: 0;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .flower-wrapper--1 { left: 50%; }
@@ -584,7 +594,7 @@ body {
   z-index: 100;
   opacity: 0;
   transition: opacity 1s ease;
-  pointer-events: none;
+  pointer-events: auto;
   background: rgba(15, 15, 26, 0.8);
 }
 
@@ -600,6 +610,7 @@ body {
   overflow-y: auto;
   position: relative;
   transform: scale(0.9);
+  pointer-events: auto;
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 

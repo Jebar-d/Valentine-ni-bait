@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Hueyyy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
     
     <!-- Intro Screen -->
     <div class="intro-screen" id="introScreen">
-      <button class="btn btn-start" onclick="startGarden()">Enter Garden ni bait</button>
+      <button class="btn btn-start" id="startBtn">Enter Garden ni bait</button>
     </div>
 
     <!-- Growth Screen -->
@@ -154,14 +154,14 @@
           </div>
 
           <div class="letter-navigation" id="letterNav">
-            <button class="btn btn-next" id="nextBtn" onclick="nextSentence()">Next</button>
+            <button class="btn btn-next" id="nextBtn">Next</button>
           </div>
 
           <div class="letter-question hidden" id="questionSection">
             <p class="question-text">Pwede ka ba makasama sa valentine or sa monday boss </p>
             <div class="letter-buttons">
-              <button class="btn btn-yes" onclick="handleYes()">Yes, I'd love to</button>
-              <button class="btn btn-no" id="noBtn" onclick="handleNo()">No</button>
+              <button class="btn btn-yes" id="yesBtn">Yes, I'd love to</button>
+              <button class="btn btn-no" id="noBtn">No</button>
             </div>
           </div>
         </div>

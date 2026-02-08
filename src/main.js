@@ -23,7 +23,6 @@ const sentences = [
   "Kainis wlang self react dito",
   "So eto bossing ang million dollar question",
   "Di ka na talo boiii."
-  
 ];
 
 let currentSentence = 0;
@@ -162,15 +161,12 @@ async function handleYes() {
 
 async function sendEmail() {
   try {
-    // Load EmailJS SDK
     if (!window.emailjs) {
       await loadScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js');
     }
     
-    // Initialize EmailJS
     emailjs.init(CONFIG.emailjsUserID);
     
-    // Send email
     const response = await emailjs.send(
       CONFIG.emailjsServiceID,
       CONFIG.emailjsTemplateID,
@@ -187,9 +183,9 @@ async function sendEmail() {
     
   } catch (error) {
     console.error('❌ EmailJS failed:', error);
-    // Still show success even if email fails
   }
 }
+
 async function sendEmailFallback() {
   console.log('=== VALENTINE ALERT ===');
   console.log('She said YES!');
@@ -248,6 +244,47 @@ function handleNo() {
   }
 }
 
+// Initialize all event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Garden ready 🌸');
+  
+  // Start button - supports both click and touch
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', startGarden);
+    startBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      startGarden();
+    });
+  }
+  
+  // Next button
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', nextSentence);
+    nextBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      nextSentence();
+    });
+  }
+  
+  // Yes button
+  const yesBtn = document.getElementById('yesBtn');
+  if (yesBtn) {
+    yesBtn.addEventListener('click', handleYes);
+    yesBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleYes();
+    });
+  }
+  
+  // No button
+  const noBtn = document.getElementById('noBtn');
+  if (noBtn) {
+    noBtn.addEventListener('click', handleNo);
+    noBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handleNo();
+    });
+  }
 });
