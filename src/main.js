@@ -1,34 +1,89 @@
 const CONFIG = {
   emailjsUserID: 'ovOHfYVUcS3iouP9j',
   emailjsServiceID: 'service_nuokyrb',
-  emailjsTemplateID: 'template_7y8pyfw',
+  emailjsTemplateID: 'template_7y8pyfw',           // YES template
+  emailjsRejectionTemplateID: 'template_qe5oqvr',  // NO template
   
-  emailSubject: 'She Said YES NIGGAGAA! 💜',
-  emailBody: 'SHEE SAID YES FUCKK YEAHHHHDBVHARAAHH!'
+  emailSubjectYes: 'She Said YES NIGGAGAA! 💜',
+  emailBodyYes: 'SHEE SAID YES FUCKK YEAHHHHDBVHARAAHH!',
+  
+  emailSubjectNo: 'She Said no nigga ',
+  emailBodyNo: 'She said no nigga, time to move on.'
 };
 
 const sentences = [
-  "Hello, AHAHAHAHHAHAHHAHAHA",
-  "Nakalimutan k sasabihin k😆",
-  "Pero ayun, alam m naman n ren siguro to.",
-  "Gusto k bumawi sayo, sa lahat ng nagawa k",
-  "Aminado ako n kasalanan k lahat nangyari",
-  "Inout grown k na lahat yon and I take accountability for it.",
-  "Nung gabi talaga nagsama tayo parang panaingip nga talaga e",
-  "Nagulat nlang talaga ako e",
-  "Sa totoo nga lang dko ren inexpct magrereply ka nung nagamusta ako,",
-  "Kase okay lang naman ren kung hindi.",
-  "Pero nagreply ka e, tas ngaun tuwang tuwa si gago n gumawa neto",
-  "Wala e, kahit anong gawin k, napaka laki ng ipikto m e",
-  "Kainis wlang self react dito",
-  "Sorry kung nakakaabala ren pla sau to",
-  "So eto bossing ang million dollar question",
-  "Di ka na talo boiii."
+  "Gel?",
+  "may gusto paren akong sabihin sayo.",
+  "at baka isipin m kinakausap kito ah",
+  "Hindi kita kinakausap", 
+  "Website to", "n may nilalaman n mga gusto k sabihin",
+  "Binago k lang lahat ng nakalagay",
+  "So ayun",
+  "Gel", 
+  "hindi ko talaga kaya mag walk away sayo.",
+  "Nakita n ren kita sa wakas tas ganon lang ule?",
+  "Ang hirap",
+  "Ang hirap m panoorin mawala nanaman sa buhay k",
+  "kung kelan nakausap n ren kita",
+  "papanoorin nanaman kita umalis",
+  "Ang sakit kaya",
+  "At napapaisip aq", "Pano kung sinabe k lahat ng gusto k",
+  "Pano kung ginawa k lahat ng gusto k gawin para sayo",
+  "Magbabago kaya isip m?",
+  "Soryy Gel,",
+  "Pero alam m naman n to",
+  "Napaka selfish k talaga",
+  "Kaya pwede m bang bigyan ule ng chance ung napaka selfish n lalaking to?",
+  "Alam k napaka late k na nga magbago ",
+  "and alam k nakamove on ka na",
+  "Pero late ba kapag nagsimula ule tayo?",
+  "A fresh start forgetting the past",
+  "and me just geting to know you all over again",
+  "kagaya nga ng sinasabe k kapag late ako sa klase",
+  "late b talaga kung magsisimula plang?",
+  "and I know",
+  "Gusto m muna magfocus sa sarili m",
+  "and I respect that",
+  "It's all up to you Gel",
+  "I won't force you to do anything you don't want to do",
+  "But just to let you know",
+  "I am begging",
+  "and I am pleading to you",
+  "Making this last effort to show you how much I care",
+  "Sorry ule gel", 
+  "pero ayaw k talaga kita makita umalis", 
+  "ng di man lang ako nagtry baguhin isip m",
+  "Kaya let me ask you again one last time",
+  "Please"
 ];
+
+const rejectionSentences = [
+  "So ayun.",
+  "Naiintindihan k at irerespeto k paren desisyon m.",
+  "But I just want to say a few things before we end this.",
+  "May I say it one last time?",
+];
+
+const finalLetterSentences = {
+  yes: [
+    "I love you Gel and always will.",
+    "and I hope you find happiness in whatever you choose to do.",
+    "Thank you for hearing me out.",
+    "No matter what, I wish you and pray for you nothing but happiness."
+  ],
+  no: [
+    "Okay Gel, I understand.",
+    "I hope you find happiness in whatever you choose to do.",
+    "No matter what, I wish and pray for you nothing but happiness."
+  ]
+};
 
 let currentSentence = 0;
 let noClickCount = 0;
 let emailSent = false;
+let currentLetterType = 'yes';
+let showingConfirmation = false;
+let finalLetterResponse = null;
 
 class Typewriter {
   constructor(element, text, speed = 50, callback = null) {
@@ -114,13 +169,23 @@ function showLetter() {
 }
 
 function typeSentence() {
-  if (currentSentence >= sentences.length) {
+  let sentenceArray;
+  
+  if (currentLetterType === 'yes') {
+    sentenceArray = sentences;
+  } else if (currentLetterType === 'no') {
+    sentenceArray = rejectionSentences;
+  } else if (currentLetterType === 'final') {
+    sentenceArray = finalLetterSentences[finalLetterResponse];
+  }
+  
+  if (currentSentence >= sentenceArray.length) {
     showQuestion();
     return;
   }
 
   const textEl = document.getElementById('letterText');
-  const writer = new Typewriter(textEl, sentences[currentSentence], 45, () => {
+  const writer = new Typewriter(textEl, sentenceArray[currentSentence], 45, () => {
     document.getElementById('nextBtn').disabled = false;
     document.getElementById('nextBtn').textContent = 'Next';
   });
@@ -144,23 +209,36 @@ function nextSentence() {
 
 function showQuestion() {
   document.getElementById('letterNav').classList.add('hidden');
-  document.getElementById('questionSection').classList.remove('hidden');
+  
+  if (currentLetterType === 'yes') {
+    document.getElementById('questionSection').classList.remove('hidden');
+  } else if (currentLetterType === 'no') {
+    document.getElementById('rejectionQuestionSection').classList.remove('hidden');
+  } else if (currentLetterType === 'final') {
+    setTimeout(() => {
+      handleFinalLetterEnd();
+    }, 1000);
+  }
 }
 
 async function handleYes() {
-  if (!emailSent) {
-    await sendEmail();
-    emailSent = true;
+  if (currentLetterType === 'no') {
+    await handleNoConfirmation();
+  } else {
+    if (!emailSent) {
+      await sendEmail(true);
+      emailSent = true;
+    }
+    const overlay = document.getElementById('letterOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      showPhotoScreen();
+    }, 500);
   }
-  const overlay = document.getElementById('letterOverlay');
-  overlay.style.opacity = '0';
-  setTimeout(() => {
-    overlay.classList.add('hidden');
-    showPhotoScreen();
-  }, 500);
 }
 
-async function sendEmail() {
+async function sendEmail(isYes = true) {
   try {
     if (!window.emailjs) {
       await loadScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js');
@@ -168,13 +246,18 @@ async function sendEmail() {
     
     emailjs.init(CONFIG.emailjsUserID);
     
+    const subject = isYes ? CONFIG.emailSubjectYes : CONFIG.emailSubjectNo;
+    const body = isYes ? CONFIG.emailBodyYes : CONFIG.emailBodyNo;
+    const templateId = isYes ? CONFIG.emailjsTemplateID : CONFIG.emailjsRejectionTemplateID;
+    
     const response = await emailjs.send(
       CONFIG.emailjsServiceID,
-      CONFIG.emailjsTemplateID,
+      templateId,
       {
         from_name: 'Valentine Website',
         to_name: 'You',
-        message: CONFIG.emailBody,
+        message: body,
+        subject: subject,
         time: new Date().toLocaleString(),
         reply_to: 'noreply@example.com'
       }
@@ -187,17 +270,33 @@ async function sendEmail() {
   }
 }
 
-async function sendEmailFallback() {
-  console.log('=== VALENTINE ALERT ===');
-  console.log('She said YES!');
-  console.log('Time:', new Date().toLocaleString());
-  console.log('Configure EmailJS to get real notifications');
-  console.log('=======================');
-  localStorage.setItem('valentineYes', JSON.stringify({
-    saidYes: true,
-    time: new Date().toISOString(),
-    userAgent: navigator.userAgent
-  }));
+async function sendRejectionEmail() {
+  try {
+    if (!window.emailjs) {
+      await loadScript('https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js');
+    }
+    
+    emailjs.init(CONFIG.emailjsUserID);
+    
+    const response = await emailjs.send(
+      CONFIG.emailjsServiceID,
+      CONFIG.emailjsRejectionTemplateID,
+      {
+        from_name: 'Valentine Website',
+        to_name: 'You',
+        message: CONFIG.emailBodyNo,
+        subject: CONFIG.emailSubjectNo,
+        time: new Date().toLocaleString(),
+        reply_to: 'noreply@example.com'
+      }
+    );
+    
+    console.log('✅ Rejection email sent using separate template!', response);
+    emailSent = true;
+    
+  } catch (error) {
+    console.error('❌ Rejection email failed:', error);
+  }
 }
 
 function loadScript(src) {
@@ -230,26 +329,93 @@ function showPhotoScreen() {
 }
 
 function handleNo() {
-  const btn = document.getElementById('noBtn');
-  noClickCount++;
-  if (noClickCount === 1) {
-    btn.classList.add('shrunk');
-    btn.textContent = 'Sure ka ba dyan?';
-  } else if (noClickCount === 2) {
-    btn.classList.add('tiny');
-    btn.textContent = 'talaga?';
-  } else if (noClickCount >= 3) {
-    btn.style.opacity = '0';
-    btn.style.pointerEvents = 'none';
-    btn.textContent = '...';
+  if (!showingConfirmation) {
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    
+    showingConfirmation = true;
+    
+    yesBtn.classList.add('hidden');
+    noBtn.textContent = 'Are you sure?';
+    noBtn.classList.remove('shrunk', 'tiny');
+    noBtn.style.opacity = '1';
+    noBtn.style.pointerEvents = 'auto';
+  } else {
+    console.log('Sending rejection email with template:', CONFIG.emailjsRejectionTemplateID);
+    sendRejectionEmail();
+    resetLetterForRejection();
   }
 }
 
-// Initialize all event listeners when DOM is loaded
+function resetLetterForRejection() {
+  currentLetterType = 'no';
+  currentSentence = 0;
+  noClickCount = 0;
+  showingConfirmation = false;
+  
+  document.getElementById('questionSection').classList.add('hidden');
+  document.getElementById('letterNav').classList.remove('hidden');
+  
+  const textEl = document.getElementById('letterText');
+  textEl.textContent = '';
+  textEl.style.opacity = '1';
+  
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = true;
+  nextBtn.textContent = '...';
+  
+  setTimeout(() => {
+    typeSentence();
+  }, 300);
+}
+
+async function handleNoConfirmation() {
+  if (!emailSent) {
+    await sendEmail(false);
+    emailSent = true;
+  }
+  
+  const overlay = document.getElementById('letterOverlay');
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    showPhotoScreen();
+  }, 500);
+}
+
+function handleFinalLetterEnd() {
+  const overlay = document.getElementById('letterOverlay');
+  overlay.style.opacity = '0';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    document.getElementById('scene').classList.remove('blurred');
+  }, 500);
+}
+
+function showFinalLetter(response) {
+  currentLetterType = 'final';
+  finalLetterResponse = response;
+  currentSentence = 0;
+  
+  document.getElementById('rejectionQuestionSection').classList.add('hidden');
+  document.getElementById('letterNav').classList.remove('hidden');
+  
+  const textEl = document.getElementById('letterText');
+  textEl.textContent = '';
+  textEl.style.opacity = '1';
+  
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = true;
+  nextBtn.textContent = '...';
+  
+  setTimeout(() => {
+    typeSentence();
+  }, 300);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Garden ready 🌸');
   
-  // DEBUG: Check if button exists
   const startBtn = document.getElementById('startBtn');
   console.log('Start button found:', startBtn);
   
@@ -259,14 +425,13 @@ document.addEventListener('DOMContentLoaded', () => {
       startGarden();
     });
     
-    // Also add touch for mobile
     startBtn.addEventListener('touchend', (e) => {
       e.preventDefault();
       console.log('Button touched!');
       startGarden();
     });
   }
-  // Next button
+  
   const nextBtn = document.getElementById('nextBtn');
   if (nextBtn) {
     nextBtn.addEventListener('click', nextSentence);
@@ -276,7 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // Yes button
   const yesBtn = document.getElementById('yesBtn');
   if (yesBtn) {
     yesBtn.addEventListener('click', handleYes);
@@ -286,13 +450,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // No button
   const noBtn = document.getElementById('noBtn');
   if (noBtn) {
     noBtn.addEventListener('click', handleNo);
     noBtn.addEventListener('touchend', (e) => {
       e.preventDefault();
       handleNo();
+    });
+  }
+
+  const rejectionYesBtn = document.getElementById('rejectionYesBtn');
+  if (rejectionYesBtn) {
+    rejectionYesBtn.addEventListener('click', () => {
+      showFinalLetter('yes');
+    });
+    rejectionYesBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      showFinalLetter('yes');
+    });
+  }
+
+  const rejectionNoBtn = document.getElementById('rejectionNoBtn');
+  if (rejectionNoBtn) {
+    rejectionNoBtn.addEventListener('click', () => {
+      showFinalLetter('no');
+    });
+    rejectionNoBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      showFinalLetter('no');
     });
   }
 });
