@@ -14,7 +14,7 @@ const CONFIG = {
 const sentences = [
   "Gel?",
   "may gusto paren akong sabihin sayo.",
-  "at baka isipin m kinakausap kito ah",
+  "at baka isipin m kinakausap kita ah",
   "Hindi kita kinakausap", 
   "Website to", "n may nilalaman n mga gusto k sabihin",
   "Binago k lang lahat ng nakalagay",
@@ -44,6 +44,8 @@ const sentences = [
   "and I know",
   "Gusto m muna magfocus sa sarili m",
   "and I respect that",
+  "But may I be apart of that?",
+  "It's all I've ever wanted.",
   "It's all up to you Gel",
   "I won't force you to do anything you don't want to do",
   "But just to let you know",
